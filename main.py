@@ -4,6 +4,8 @@ from pathlib import Path
 import sys
 from getpass import getpass
 from pyrebase import pyrebase
+import firebase_admin
+from firebase_admin import  firestore , credentials
 
 from PySide2.QtGui import QGuiApplication , QIcon
 from PySide2.QtQml import QQmlApplicationEngine
@@ -32,10 +34,16 @@ firebaseConfig = {
 firebase = pyrebase.initialize_app(firebaseConfig)
 
 auth = firebase.auth()
-
-
+storage = firebase.storage()
+#file = input("dosya adı :  ")
+#cloudfilename = input("nereye kayıt olacağı : ")
+#storage.child(cloudfilename).put(file)
+#print(storage.child(cloudfilename).get_url(None))
 #user = auth.create_user_with_email_and_password(email, password)
 
+kimlik = credentials.Certificate("./rover-y.json")
+firebaseapp1 = firebase_admin.initialize_app(kimlik)
+database = firestore.client()
 
 class MainWindow(QObject):
     def __init__(self):
@@ -46,14 +54,29 @@ class MainWindow(QObject):
 
     setLogin = Signal(str)
 
+    setsignup = Signal(str)
+
+
     @Slot(str)
     def welcomeText(self,name):
-        self.setName.emit("NOT FINDED,"+name)
+        self.setName.emit("We didn't find the ,"+name)
 
     @Slot(str,str)
     def recister(self, email, password):
         user = auth.sign_in_with_email_and_password(email, password)
         self.setLogin.emit(":)")
+
+    @Slot(str,str,str,str)
+    def databasekimlik(self,signupname,signupsurname,signupemail,signuppassword):
+        newuser = auth.create_user_with_email_and_password(signupemail,signuppassword)
+        document = database.collection(signupname).document(signupsurname)
+        document.set({
+        "name" : signupname,
+        "surname" : signupsurname,
+        "email" : signupemail,
+        "password" : signuppassword
+        })
+        self.setsignup.emit("kayıt başarılı")
 
 
 

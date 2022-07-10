@@ -20,29 +20,23 @@ Window {
         id: screenbg
         color: "#202020"
         radius: 20
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 10
-        anchors.leftMargin: 10
-        anchors.bottomMargin: 10
-        anchors.topMargin: 10
+        anchors.fill: parent
 
         Label {
             id: label
-            y: 8
             color: "#ffffff"
             text: qsTr("SIGN IN TO R-Y")
+            anchors.top: parent.top
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            anchors.topMargin: 40
             anchors.horizontalCenterOffset: 1
             font.pointSize: 16
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
         CustomTextField{
-            id: emailinput
+            id: nameinput
             width: 300
             height: 40
             anchors.top: parent.top
@@ -50,7 +44,7 @@ Window {
             colorOnFocus: "#606060"
             colorDefault: "#606060"
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 75
+            anchors.topMargin: 145
 
         }
 
@@ -65,7 +59,7 @@ Window {
             anchors.top: parent.top
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
-            anchors.topMargin: 50
+            anchors.topMargin: 120
             anchors.leftMargin: 30
             font.pointSize: 12
         }
@@ -81,7 +75,7 @@ Window {
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
             font.pointSize: 12
-            anchors.topMargin: 120
+            anchors.topMargin: 190
             anchors.leftMargin: 30
         }
 
@@ -92,7 +86,7 @@ Window {
             anchors.top: parent.top
             placeholderText: "Surname"
             colorDefault: "#606060"
-            anchors.topMargin: 160
+            anchors.topMargin: 230
             anchors.horizontalCenter: parent.horizontalCenter
             colorOnFocus: "#606060"
         }
@@ -108,7 +102,7 @@ Window {
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
             font.pointSize: 12
-            anchors.topMargin: 200
+            anchors.topMargin: 270
             anchors.leftMargin: 30
         }
 
@@ -119,7 +113,7 @@ Window {
             anchors.top: parent.top
             placeholderText: "e-mail"
             colorDefault: "#606060"
-            anchors.topMargin: 230
+            anchors.topMargin: 300
             anchors.horizontalCenter: parent.horizontalCenter
             colorOnFocus: "#606060"
         }
@@ -135,7 +129,7 @@ Window {
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
             font.pointSize: 12
-            anchors.topMargin: 270
+            anchors.topMargin: 340
             anchors.leftMargin: 30
         }
 
@@ -146,38 +140,13 @@ Window {
             anchors.top: parent.top
             placeholderText: "password"
             colorDefault: "#606060"
-            anchors.topMargin: 300
-            anchors.horizontalCenter: parent.horizontalCenter
-            colorOnFocus: "#606060"
-            echoMode: TextInput.Password
-        }
-        Label {
-            id: label6
-            width: 202
-            height: 25
-            color: "#ffffff"
-            text: qsTr("Enter your password again :")
-            anchors.left: parent.left
-            anchors.top: parent.top
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-            font.pointSize: 12
-            anchors.topMargin: 340
-            anchors.leftMargin: 30
-        }
-
-        CustomTextField {
-            id: password2input
-            width: 300
-            height: 40
-            anchors.top: parent.top
-            placeholderText: "password"
-            colorDefault: "#606060"
             anchors.topMargin: 370
             anchors.horizontalCenter: parent.horizontalCenter
             colorOnFocus: "#606060"
             echoMode: TextInput.Password
         }
+
+
 
         CustomButton{
             id: signinbtn
@@ -191,16 +160,26 @@ Window {
             font.pointSize: 15
             anchors.bottomMargin: 60
             anchors.rightMargin: 30
+            onClicked: {
+                backend.databasekimlik(nameinput.text,surnameinput.text,mailsigninput.text,password1input.text)
+            }
 
         }
 
         CheckBox {
             id: checkBox
-            x: 30
             y: 416
             width: 292
             height: 18
             text: qsTr("Kullanım koşullarını kabul ediyorum")
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 125
+            anchors.leftMargin: 31
+
+
+
+
         }
         CustomButton{
             id:backbtn
@@ -223,8 +202,28 @@ Window {
 
             }
         }
+        Label{
+            id: label25
+            color: "#ffffff"
+            text: qsTr("")
+            anchors.bottom: parent.bottom
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 19
+            font.pointSize: 16
+
+        }
 
 
+
+    }
+    Connections{
+        target: backend
+
+        function onSetsignup(signupname){
+            label25.text = signupname
+        }
     }
 }
 

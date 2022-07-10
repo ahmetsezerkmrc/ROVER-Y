@@ -68,7 +68,7 @@ Window {
             anchors.top: parent.top
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: 12
+            font.pointSize: 9
             anchors.horizontalCenterOffset: 0
             anchors.topMargin: 260
             anchors.horizontalCenter: parent.horizontalCenter
@@ -149,7 +149,13 @@ Window {
             anchors.bottomMargin: 90
             anchors.rightMargin: 60
             onClicked: {
+
+                if(label1.text !== ":)"){
+                    label1.text = "YOUR EMAIL OR YOUR PASSWORD IS RONG"
+                }
+
                 backend.recister(textfieldemail.text,textfieldpassword.text)
+
 
                 if(label1.text === ":)"){
                     var component = Qt.createComponent("main.qml")
@@ -159,6 +165,7 @@ Window {
                     close("itemi")
 
                 }
+
 
             }
 
@@ -205,7 +212,7 @@ Window {
 /*##^##
 Designer {
     D{i:0;formeditorZoom:1.33}D{i:2}D{i:3}D{i:4}D{i:5}D{i:6}D{i:7}D{i:8}D{i:9}D{i:10}
-D{i:1}
+D{i:11}D{i:1}
 }
 ##^##*/
 }
